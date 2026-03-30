@@ -40,18 +40,37 @@ body::before {
     text-align: center;
 }
 
-/* ЛОГО */
-.logo {
-    width: 140px;
-    display: block;
-    margin: 0 auto 20px;
-    animation: pulse 2s infinite;
+/* ГЛИТЧ ЛОГО */
+.glitch {
+    font-size: 60px;
+    position: relative;
+    color: white;
 }
 
-@keyframes pulse {
-    0% { filter: drop-shadow(0 0 5px #7b2cff); }
-    50% { filter: drop-shadow(0 0 25px #a855f7); }
-    100% { filter: drop-shadow(0 0 5px #7b2cff); }
+.glitch::before,
+.glitch::after {
+    content: "PEONEER";
+    position: absolute;
+    left: 0;
+}
+
+.glitch::before {
+    color: red;
+    animation: glitch 1s infinite;
+}
+
+.glitch::after {
+    color: blue;
+    animation: glitch 1s infinite reverse;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px,2px); }
+    40% { transform: translate(-2px,-2px); }
+    60% { transform: translate(2px,2px); }
+    80% { transform: translate(2px,-2px); }
+    100% { transform: translate(0); }
 }
 
 /* НЕОН */
@@ -88,7 +107,14 @@ body::before {
     background: rgba(20,20,30,0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 40px rgba(140, 0, 255, 0.3);
-    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* СЕТАП */
@@ -123,33 +149,31 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-    <img src="logo.png" class="logo" alt="logo">
-
-    <h1 class="glow">PEONEER</h1>
+    <h1 class="glitch">PEONEER</h1>
     <p>Разные игры • Живой вайб • Без фильтров</p>
 
     <a href="https://twitch.tv/peoneer_play" class="btn">СМОТРЕТЬ СТРИМ</a>
+</section>
+
+<!-- СТРИМ -->
+<section class="card">
+    <h2 class="glow">LIVE</h2>
+
+    <iframe
+        src="https://player.twitch.tv/?channel=peoneer_play&parent=localhost"
+        height="400"
+        width="100%"
+        allowfullscreen>
+    </iframe>
 </section>
 
 <!-- ОБО МНЕ -->
 <section class="card">
     <h2 class="glow">ОБО МНЕ</h2>
 
-    <p>
-        Я не просто стримлю — я создаю движ.<br>
-        Каждый стрим — это эмоции, катки и живое общение.
-    </p>
+    <p>Я создаю движ. Каждый стрим — это эмоции и живое общение.</p>
 
-    <p>
-        🎮 Разные игры каждый день<br>
-        ⚡ От хардкора до фана<br>
-        🔥 Без фальши
-    </p>
-
-    <p class="glow">
-        17:00 – 20:00 (МСК)<br>
-        Выходные — перезагрузка
-    </p>
+    <p class="glow">17:00 – 20:00 (МСК)</p>
 </section>
 
 <!-- ПК -->
@@ -159,9 +183,21 @@ footer {
     <div class="setup-grid">
         <div class="setup-item">i9 12900KF</div>
         <div class="setup-item">RTX 4070</div>
-        <div class="setup-item">32GB 3200</div>
+        <div class="setup-item">32GB</div>
         <div class="setup-item">~9TB</div>
     </div>
+</section>
+
+<!-- ПРАВИЛА -->
+<section class="card">
+    <h2 class="glow">ПРАВИЛА</h2>
+
+    <p>
+        — Без политики и срачей<br>
+        — Без токсичности<br>
+        — Не спамить<br>
+        — Уважать всех
+    </p>
 </section>
 
 <!-- СОЦСЕТИ -->
@@ -171,7 +207,7 @@ footer {
     <a href="https://twitch.tv/peoneer_play" class="btn">Twitch</a>
     <a href="https://t.me/peoneer_play" class="btn">Telegram</a>
     <a href="https://www.tiktok.com/@peoneer_play?_r=1&_t=ZN-957NNG6QlV8" class="btn">TikTok</a>
-    <a href="https://youtube.com/@peoneer_play?si=NuWtP13YjXOLun5F" class="btn">YouTube</a>
+    <a href="https://youtube.com/@peoneer_play" class="btn">YouTube</a>
     <a href="https://www.instagram.com/__peoneer_" class="btn">Instagram</a>
     <a href="https://vk.com/peoneer_play" class="btn">VK</a>
 </section>
@@ -179,6 +215,20 @@ footer {
 <footer>
     © PEONEER
 </footer>
+
+<script>
+// СКРОЛЛ АНИМАЦИЯ
+const cards = document.querySelectorAll(".card");
+
+window.addEventListener("scroll", () => {
+    cards.forEach(card => {
+        const pos = card.getBoundingClientRect().top;
+        if (pos < window.innerHeight - 100) {
+            card.classList.add("visible");
+        }
+    });
+});
+</script>
 
 </body>
 </html>
