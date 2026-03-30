@@ -9,66 +9,26 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #050507;
+    background: radial-gradient(circle at center, #1a0033, #000000);
     color: white;
     overflow-x: hidden;
 }
 
-/* ЛОАДЕР */
-.loader {
+/* АНИМИРОВАННЫЙ ФОН */
+body::before {
+    content: "";
     position: fixed;
-    width: 100%;
-    height: 100%;
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    flex-direction: column;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(140,0,255,0.25), transparent 60%);
+    animation: moveBg 12s linear infinite;
+    z-index: -1;
 }
 
-.loader h1 {
-    color: #a855f7;
-    animation: pulse 1s infinite;
-}
-
-/* ГЛИТЧ */
-.glitch {
-    position: relative;
-    font-size: 60px;
-    color: white;
-}
-
-.glitch::before,
-.glitch::after {
-    content: "PEONEER";
-    position: absolute;
-    left: 0;
-}
-
-.glitch::before {
-    color: red;
-    animation: glitch 1s infinite;
-}
-
-.glitch::after {
-    color: blue;
-    animation: glitch 1s infinite reverse;
-}
-
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px,2px); }
-    40% { transform: translate(-2px,-2px); }
-    60% { transform: translate(2px,2px); }
-    80% { transform: translate(2px,-2px); }
-    100% { transform: translate(0); }
-}
-
-/* НЕОН */
-.glow {
-    color: #c084ff;
-    text-shadow: 0 0 20px #7b2cff;
+@keyframes moveBg {
+    0% { transform: translate(-20%, -20%); }
+    50% { transform: translate(0%, 0%); }
+    100% { transform: translate(-20%, -20%); }
 }
 
 /* HERO */
@@ -80,15 +40,37 @@ body {
     text-align: center;
 }
 
-/* КНОПКИ */
+/* ЛОГО */
+.logo {
+    width: 140px;
+    display: block;
+    margin: 0 auto 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { filter: drop-shadow(0 0 5px #7b2cff); }
+    50% { filter: drop-shadow(0 0 25px #a855f7); }
+    100% { filter: drop-shadow(0 0 5px #7b2cff); }
+}
+
+/* НЕОН ТЕКСТ */
+.glow {
+    color: #c084ff;
+    text-shadow: 0 0 20px #7b2cff;
+}
+
+/* КНОПКА */
 .btn {
     display: inline-block;
-    margin: 10px;
+    margin-top: 20px;
     padding: 12px 25px;
     border-radius: 12px;
     background: #7b2cff;
     color: white;
     text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 15px #7b2cff;
     transition: 0.3s;
 }
 
@@ -106,63 +88,93 @@ body {
     background: rgba(20,20,30,0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 40px rgba(140, 0, 255, 0.3);
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 1s;
+    text-align: center;
 }
 
-.card.visible {
-    opacity: 1;
-    transform: translateY(0);
+/* СЕТАП */
+.setup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.setup-item {
+    padding: 20px;
+    border-radius: 15px;
+    background: #111;
+    transition: 0.3s;
+}
+
+.setup-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #7b2cff;
+}
+
+/* ФУТЕР */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ЛОАДЕР -->
-<div class="loader" id="loader">
-    <h1>LOADING...</h1>
-</div>
-
 <!-- HERO -->
 <section class="hero">
-    <h1 class="glitch">PEONEER</h1>
-    <p>Живой стрим • Разные игры • Без фильтров</p>
+    <img src="logo.png" class="logo" alt="logo">
 
-    <a href="https://twitch.tv/peoneer_play" class="btn">СМОТРЕТЬ</a>
+    <h1 class="glow">PEONEER</h1>
+    <p>Разные игры • Живой вайб • Без фильтров</p>
+
+    <a href="https://twitch.tv/peoneer_play" class="btn">СМОТРЕТЬ СТРИМ</a>
 </section>
 
 <!-- ОБО МНЕ -->
-<div class="card">
+<section class="card">
     <h2 class="glow">ОБО МНЕ</h2>
-    <p>Я создаю движ. Каждый стрим — это эмоции и живое общение.</p>
-</div>
 
-<!-- СЕТАП -->
-<div class="card">
+    <p>
+        Я не просто стримлю — я создаю движ.<br>
+        Каждый стрим — это эмоции, катки и живое общение.
+    </p>
+
+    <p>
+        🎮 Разные игры каждый день<br>
+        ⚡ От хардкора до фана<br>
+    </p>
+
+    <p class="glow">
+        17:00 – 20:00 (МСК)<br>
+        Выходные — перезагрузка
+    </p>
+</section>
+
+<!-- ПК -->
+<section class="card">
     <h2 class="glow">МОЙ ПК</h2>
-    <p>i9 12900KF • RTX 4070 • 32GB • ~9TB</p>
-</div>
 
-<script>
-// LOADER
-window.onload = () => {
-    document.getElementById("loader").style.display = "none";
-}
+    <div class="setup-grid">
+        <div class="setup-item">i9 12900KF</div>
+        <div class="setup-item">RTX 4070</div>
+        <div class="setup-item">32GB 3200</div>
+        <div class="setup-item">~9TB</div>
+    </div>
+</section>
 
-// SCROLL ANIMATION
-const cards = document.querySelectorAll(".card");
+<!-- СОЦСЕТИ -->
+<section class="card">
+    <h2 class="glow">СОЦСЕТИ</h2>
 
-window.addEventListener("scroll", () => {
-    cards.forEach(card => {
-        const pos = card.getBoundingClientRect().top;
-        if (pos < window.innerHeight - 100) {
-            card.classList.add("visible");
-        }
-    });
-});
-</script>
+    <a href="https://twitch.tv/peoneer_play" class="btn">Twitch</a>
+    <a href="#" class="btn">Telegram</a>
+    <a href="#" class="btn">TikTok</a>
+</section>
+
+<footer>
+    © PEONEER
+</footer>
 
 </body>
 </html>
